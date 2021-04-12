@@ -18,6 +18,9 @@ endif
 
 XDG_CONFIG_HOME ?= $(HOME)/.config
 
+.PHONY: update
+update: update-plugins README.md ## Updates all plugins and regenerates README
+
 .PHONY: install
 install: ## Sets up symlink for user and root .vimrc for vim and neovim.
 	ln -snf "$(HOME)/.vim/vimrc" "$(HOME)/.vimrc"
@@ -30,7 +33,7 @@ install: ## Sets up symlink for user and root .vimrc for vim and neovim.
 	sudo ln -snf "$(HOME)/.vim" /root/.config/nvim
 	sudo ln -snf "$(HOME)/.vimrc" /root/.config/nvim/init.vim
 
-.PHONY: update
+.PHONY: update-plugins
 update: ## Updates all plugins.
 	git submodule update --init --recursive
 	git submodule update --remote
