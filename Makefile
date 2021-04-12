@@ -1,5 +1,21 @@
 SHELL := bash
 
+ifeq ($(OS),Windows_NT)
+	detected_OS := Windows
+else
+	detected_OS := $(shell sh -c 'uname 2>/dev/null || echo Unknown')
+endif
+
+SED = sed
+ifeq ($(detected_OS),Darwin)
+	GSED := $(shell gsed --version 2>/dev/null)
+
+	ifndef GSED
+		$(error "builtin sed on os x is hot garbage and this won't work, install gnu-sed")
+	endif
+	SED = GSED
+endif
+
 XDG_CONFIG_HOME ?= $(HOME)/.config
 
 .PHONY: install
@@ -15,10 +31,7 @@ install: ## Sets up symlink for user and root .vimrc for vim and neovim.
 	sudo ln -snf "$(HOME)/.vimrc" /root/.config/nvim/init.vim
 
 .PHONY: update
-update: update-pathogen update-plugins ## Updates pathogen and all plugins.
-
-.PHONY: update-plugins
-update-plugins: ## Updates all plugins.
+update: ## Updates all plugins.
 	git submodule update --init --recursive
 	git submodule update --remote
 	@if [[ -d "$(CURDIR)/bundle/coc.vim" ]]; then \
@@ -28,14 +41,10 @@ update-plugins: ## Updates all plugins.
 	fi
 	git submodule foreach 'git pull --recurse-submodules origin `git rev-parse --abbrev-ref HEAD`'
 
-.PHONY: update-pathogen
-update-pathogen: ## Updates pathogen.
-	curl -LSso $(CURDIR)/autoload/pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-
 .PHONY: README.md
 README.md: ## Generates and updates plugin info in README.md.
-	@sed -i '/## Plugins Used/q' $@
-	@git  submodule --quiet foreach bash -c "echo -e \"* [\$$(git config --get remote.origin.url | sed 's#https://##' | sed 's#git://##' | sed 's/.git//')](\$$(git config --get remote.origin.url))\"" >> $@
+	@$(SED) -i '/## Plugins Used/q' $@
+	@git submodule --quiet foreach bash -c "echo -e \"* [\$$(git config --get remote.origin.url | $(SED) 's#https://##' | $(SED) 's#git://##' | $(SED) 's/.git//')](\$$(git config --get remote.origin.url))\"" >> $@
 
 check_defined = \
 				$(strip $(foreach 1,$1, \
@@ -53,7 +62,6 @@ remove-submodule: ## Removes a git submodule (ex MODULE=bundle/nginx.vim).
 	$(RM) -r .git/modules/$(MODULE)
 	git rm -f $(MODULE)
 	$(RM) -r $(MODULE).tmp
-
 
 .PHONY: help
 help:
