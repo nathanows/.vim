@@ -163,8 +163,6 @@ let g:mapleader = ","
 map <C-n> :cn<CR>
 map <C-m> :cp<CR>
 
-nnoremap <silent> <leader>q :Sayonara<CR>
-
 " Replace the current buffer with the given new file. That means a new file
 " will be open in a buffer while the old one will be deleted
 com! -nargs=1 -complete=file Breplace edit <args>| bdelete #
@@ -382,6 +380,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " auto strip whitespace except for file with extention blacklisted
 let blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown']
 autocmd BufWritePre * if index(blacklist, &ft) < 0 | StripWhitespace
+
+" ========= better-vim-tmux-resizer ================
+let g:tmux_resizer_no_mappings = 1
+
+noremap <esc>j :TmuxResizeUp<CR>
+noremap <esc>k :TmuxResizeDown<CR>
+noremap <esc>h :TmuxResizeLeft<CR>
+noremap <esc>l :TmuxResizeRight<CR>
 
 " ========= misc(?) ==================
 
