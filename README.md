@@ -57,7 +57,6 @@ update                         Updates all plugins.
 * [github.com/itchyny/lightline.vim](https://github.com/itchyny/lightline.vim.git)
 * [github.com/preservim/nerdtree](https://github.com/preservim/nerdtree.git)
 * [github.com/Xuyuanp/nerdtree-plugin.git](https://github.com/Xuyuanp/nerdtree-git-plugin.git)
-* [github.com/codota/tabnine-vim](https://github.com/codota/tabnine-vim.git)
 * [github.com/ntpeters/vim-better-whitespace](https://github.com/ntpeters/vim-better-whitespace.git)
 * [github.com/tpope/vim-endwise](https://github.com/tpope/vim-endwise.git)
 * [github.com/tpope/vim-five.git](https://github.com/tpope/vim-fugitive.git)
