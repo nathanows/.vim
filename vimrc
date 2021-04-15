@@ -140,10 +140,9 @@ if has('gui_running')
   set regexpengine=1
   syntax enable
 endif
-set background=dark
-colorscheme badwolf
+colorscheme dracula
+set termguicolors
 set guifont=Inconsolata:h15
-set guioptions-=L
 
 " This comes first, because we have mappings that depend on leader
 " With a map leader it's possible to do extra key combinations
@@ -357,6 +356,10 @@ augroup go
   autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
   autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
 augroup END
+
+"==================== vim-json ===================
+" by default apparently quotes are auto-hidden with this plugin, that's dumb...
+let g:vim_json_conceal=0
 
 "==================== NerdTree ====================
 " For toggling

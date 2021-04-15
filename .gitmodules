@@ -64,3 +64,9 @@
 [submodule "bundle/better-vim-tmux-resizer"]
 	path = bundle/better-vim-tmux-resizer
 	url = https://github.com/RyanMillerC/better-vim-tmux-resizer.git
+[submodule "bundle/falcon"]
+	path = bundle/falcon
+	url = https://github.com/fenetikm/falcon.git
+[submodule "bundle/dracula"]
+	path = bundle/dracula
+	url = git@github.com:dracula/vim.git
